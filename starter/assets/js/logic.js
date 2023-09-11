@@ -7,7 +7,7 @@ let timerID;
 // html elements;
 let questionsElement = document.getElementById("questions");
 let timerElement = document.getElementById("time");
-let choiceElement = document.getElementById("choices");
+let choicesElement = document.getElementById("choices");
 let submitButton = document.getElementById("submit");
 let startButton = document.getElementById("start");
 let initialElement = document.getElementById("initials");
@@ -55,7 +55,7 @@ function getQuestion() {
 
     titleElement.textContent = currentQuestion.title;
 
-    choiceElement.innerHTML = "";
+    choicesElement.innerHTML = "";
 
     currentQuestion.choices.forEach(function(choice, index){
         let choiceButtons = document.createElement("button");
@@ -67,7 +67,7 @@ function getQuestion() {
 
         choiceButtons.addEventListener("click", questionClick);
 
-        choiceElement.append(choiceButton);
+        choicesElement.append(choiceButtons);
     })
 }
 
