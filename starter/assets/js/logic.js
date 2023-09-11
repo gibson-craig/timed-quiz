@@ -16,7 +16,37 @@ let feedBackElement = document.getElementById("feedback");
 
 let sfxRight = new Audio("assests/sfx/correct.wav");
 
+function questionClick() {
+    if(this.value !== questions[currentQuestionIndex].answer) {
+        time -= 15;
 
+        if(time < 0) {
+            time = 0
+        }
+
+        timerElement.textContent = time;
+
+        feedBackElement.textContent = "Wrong" 
+        } else {
+            sfxRight.play();
+            feedBackElement.textContent = "Correct!"
+    }
+
+
+    feedBackElement.setAttribute("class", "feedback");
+
+    setTimeout(function(){
+        feedBackElement.setAttribute("class", "feedback hide")
+    }, 1000);
+
+    currentQuestionIndex++;
+
+    if(currentQuestionIndex === questions.length) {
+        quizEnd()
+    }   else {
+        getQuestion();
+    }
+}
 
 function getQuestion() {
     let currentQuestion = questions[currentQuestionIndex];
@@ -39,10 +69,6 @@ function getQuestion() {
 
         choiceElement.append(choiceButton);
     })
-}
-
-function questionClick() {
-
 }
 
 function quizEnd () {
@@ -81,11 +107,30 @@ timerElement.textContent = time;
 getQuestion();
 }
 
+
+
+
 function saveHighScore() {
+    let initials = initialElement.value.trim();
+
+    if(initials !== ""){
+        let highScores = JSON.parse(localStorage.getItem("highscores")) || [];
+        let newScore = {
+            score: time,
+            initials: initials
+        }
+
+        highScores.push(newScore);
+        localStorage.setItem("highscores", JSON.stringify(highScores));
+
+        window.location.href = "highscores.html";
+    }
 
 }
 
 function checkForEnter(event) {
+    if(event.key === "Enter")
+    saveHighScore();
 
 }
 
